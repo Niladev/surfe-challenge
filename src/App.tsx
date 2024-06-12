@@ -3,11 +3,11 @@ import { Route, Routes } from "react-router-dom";
 
 const App = () => {
   return (
-    <>
+    <div className="container h-full w-full mx-auto flex justify-center">
       <Routes>
-        <Route path="/:noteId?" element={<Note />} />
+        <Route index path="/:noteId?" element={<Note />} />
       </Routes>
-    </>
+    </div>
   );
 };
 
