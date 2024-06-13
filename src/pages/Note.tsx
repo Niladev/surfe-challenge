@@ -114,18 +114,20 @@ const Note = () => {
           const note = data;
           navigate(`/${note.id}`, { replace: true });
         },
-        debounceMs: 500,
+        debounceMs: 300,
       });
     } else {
-      updateNoteMutation.debouncedMutate(
-        { noteId: parseInt(noteId), body: newContent || "" },
-        {
-          onSuccess: () => {
-            console.log("updated note successful");
-          },
-          debounceMs: 500,
-        }
-      );
+      if (!isMentioning) {
+        updateNoteMutation.debouncedMutate(
+          { noteId: parseInt(noteId), body: newContent || "" },
+          {
+            onSuccess: () => {
+              console.log("updated note successful");
+            },
+            debounceMs: 300,
+          }
+        );
+      }
     }
   };
 

@@ -34,7 +34,7 @@ const UserSearch = ({
 
   return (
     <div
-      className="absolute w-1/6 overflow-y-scroll  border border-slate-500 rounded flex "
+      className="absolute overflow-y-scroll  border border-slate-500 rounded flex "
       style={{
         top: top + 28,
         left: left,
@@ -43,11 +43,11 @@ const UserSearch = ({
       {isLoading && <img src={loader} />}
       {error && <p>There was an error fetching users.</p>}
       {data && (
-        <ul className="w-full">
+        <ul className="w-full ">
           {renderFilteredUsers()?.map((user) => (
             <li
               onClick={() => onClick(`${user.first_name} ${user.last_name}`)}
-              className="w-full p-2 gap-0 cursor-default hover:bg-slate-500 hover:text-white"
+              className="w-full p-2 px-3 gap-0 cursor-default hover:bg-slate-500 hover:text-white"
             >
               <p className="capitalize m-0 p-0">{`${user.first_name} ${user.last_name}`}</p>{" "}
               <span className="text-xs mt-0">{user.username}</span>
