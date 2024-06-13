@@ -36,7 +36,7 @@ export const putNote = async ({
 };
 
 export const fetchUsers = async () => {
-  const response = await axios.get(`${BASE_URL}/users`);
+  const response = await axios.get(`${API_URL}/users`);
 
   return response.data;
 };
