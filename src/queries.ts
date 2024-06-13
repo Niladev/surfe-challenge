@@ -34,3 +34,9 @@ export const putNote = async ({
 
   return response.data;
 };
+
+export const fetchUsers = async () => {
+  const response = await axios.get(`${BASE_URL}/users`);
+
+  return response.data;
+};

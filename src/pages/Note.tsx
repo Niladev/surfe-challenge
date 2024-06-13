@@ -119,7 +119,7 @@ const Note = () => {
       document.execCommand(
         "insertHTML",
         false,
-        `<span class="bg-slate-500 text-white p-2 rounded">Nicklas Jensen</span><span>&nbsp;</span>`
+        `<input type="button" value="Nicklas Jensen" class="bg-slate-500  text-white py-0 px-2 rounded"/><span>&nbsp;</span>`
       );
 
       sel.collapseToEnd();
@@ -135,7 +135,8 @@ const Note = () => {
         contentEditable={true}
         onInput={handleChange}
         ref={textDivRef}
-        className="w-full h-full text-xl p-5 focus:outline-none text-wrap break-words"
+        autoCorrect="off"
+        className="w-full h-full text-xl p-5 focus:outline-none text-wrap break-words leading-9"
       />
       {isMentioning && (
         <UserSearch
