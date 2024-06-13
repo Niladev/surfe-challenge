@@ -4,6 +4,7 @@ import { fetchNote, postNote, putNote } from "src/queries";
 import { useDebouncedMutation } from "@hooks/useDebouncedMutation";
 import { useQuery } from "@tanstack/react-query";
 import UserSearch from "src/components/UserSearch";
+import ReactDOMServer from "react-dom/server";
 
 const Note = () => {
   const [isMentioning, setIsMentioning] = useState(false);
@@ -119,7 +120,16 @@ const Note = () => {
       document.execCommand(
         "insertHTML",
         false,
-        `<input type="button" value="Nicklas Jensen" class="bg-slate-500  text-white py-0 px-2 rounded"/><span>&nbsp;</span>`
+        ReactDOMServer.renderToString(
+          <>
+            <input
+              type="button"
+              value="Nicklas Jensen"
+              className="bg-slate-500  text-white py-0 px-2 rounded "
+            />
+            <span>&nbsp;</span>
+          </>
+        )
       );
 
       sel.collapseToEnd();
