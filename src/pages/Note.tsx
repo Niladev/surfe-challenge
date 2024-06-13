@@ -106,7 +106,7 @@ const Note = () => {
   };
 
   const handleUserClick = () => {
-    const sel = window.getSelection();
+    const sel = document.getSelection();
     if (sel?.rangeCount && focusNode) {
       const range = sel.getRangeAt(0);
 
@@ -119,8 +119,10 @@ const Note = () => {
       document.execCommand(
         "insertHTML",
         false,
-        `<span class="bg-slate-500 text-white">Nicklas Jensen</span>`
+        `<span class="bg-slate-500 text-white p-2 rounded">Nicklas Jensen</span><span>&nbsp;</span>`
       );
+
+      sel.collapseToEnd();
 
       setIsMentioning(false);
     }
