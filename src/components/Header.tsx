@@ -1,6 +1,21 @@
-import { Link } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
+import { Link, useNavigate } from "react-router-dom";
+import { postNote } from "src/queries";
 
 const Header = () => {
+  const navigate = useNavigate();
+  const createNoteMutation = useMutation({
+    mutationFn: postNote,
+  });
+  const createNewNote = () => {
+    createNoteMutation.mutate(" ", {
+      onSuccess: async (data) => {
+        const note = data;
+        navigate(`/note/${note.id}`);
+      },
+    });
+  };
+
   return (
     <header className="container lg:w-3/6 w-full mt-5 px-3 flex justify-between">
       <Link to="/notes">
@@ -19,7 +34,7 @@ const Header = () => {
           />
         </svg>
       </Link>
-      <Link to="/note/">
+      <button onClick={createNewNote}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -34,7 +49,7 @@ const Header = () => {
             d="M12 4.5v15m7.5-7.5h-15"
           />
         </svg>
-      </Link>
+      </button>
     </header>
   );
 };

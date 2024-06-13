@@ -1,6 +1,6 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { fetchNote, postNote, putNote } from "src/queries";
+import { fetchNote, putNote } from "src/queries";
 import { useDebouncedMutation } from "@hooks/useDebouncedMutation";
 import { useQuery } from "@tanstack/react-query";
 import UserSearch from "src/components/UserSearch";
@@ -18,9 +18,8 @@ const Note = () => {
   const { data: note, isLoading } = useQuery({
     queryKey: ["note", noteId],
     queryFn: () => fetchNote(parseInt(noteId!)),
-    enabled: Boolean(noteId),
   });
-  const [content, setContent] = useState(note?.body || "");
+  const [content, setContent] = useState("");
 
   const userSearchSelection = useMemo(() => {
     const selection = document.getSelection();
@@ -43,11 +42,6 @@ const Note = () => {
     return range?.toString();
   }, [startOffset, endOffSet]);
 
-  const navigate = useNavigate();
-
-  const createNoteMutation = useDebouncedMutation({
-    mutationFn: postNote,
-  });
   const updateNoteMutation = useDebouncedMutation({
     mutationFn: putNote,
   });
@@ -105,29 +99,18 @@ const Note = () => {
 
   const handleChange = (event: React.FormEvent<HTMLDivElement>) => {
     const newContent = event.currentTarget.innerHTML;
+    setContent(newContent);
 
-    setContent(newContent || "");
-
-    if (!noteId) {
-      createNoteMutation.debouncedMutate(newContent || " ", {
-        onSuccess: async (data) => {
-          const note = data;
-          navigate(`/${note.id}`, { replace: true });
-        },
-        debounceMs: 300,
-      });
-    } else {
-      if (!isMentioning) {
-        updateNoteMutation.debouncedMutate(
-          { noteId: parseInt(noteId), body: newContent || "" },
-          {
-            onSuccess: () => {
-              console.log("updated note successful");
-            },
-            debounceMs: 300,
-          }
-        );
-      }
+    if (!isMentioning && noteId) {
+      updateNoteMutation.debouncedMutate(
+        { noteId: parseInt(noteId), body: newContent || "" },
+        {
+          onSuccess: () => {
+            console.log("updated note successful");
+          },
+          debounceMs: 300,
+        }
+      );
     }
   };
 
