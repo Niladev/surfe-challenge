@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchUsers } from "src/queries";
-import loader from "@assets/loader.svg";
 import { User } from "src/types";
+import Loader from "@components/Loader";
 
 const UserSearch = ({
   top,
@@ -40,7 +40,7 @@ const UserSearch = ({
         left: left,
       }}
     >
-      {isLoading && <img src={loader} />}
+      {isLoading && <Loader />}
       {error && <p>There was an error fetching users.</p>}
       {data && (
         <ul className="w-full ">

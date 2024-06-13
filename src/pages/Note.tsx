@@ -16,7 +16,7 @@ const Note = () => {
   const { noteId } = useParams();
   const textDivRef = useRef<HTMLDivElement>(null);
   const { data: note, isLoading } = useQuery({
-    queryKey: ["note"],
+    queryKey: ["note", noteId],
     queryFn: () => fetchNote(parseInt(noteId!)),
     enabled: Boolean(noteId),
   });
